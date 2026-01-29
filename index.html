@@ -1,0 +1,1285 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Black Car Limousines | GTA Airport Transfers & Chauffeur</title>
+  <meta name="description" content="Premium limousine and chauffeur service in the GTA. Airport transfers, corporate travel, weddings, events. Professional drivers. Luxury fleet. Book in minutes." />
+  <meta name="theme-color" content="#0b0b0f" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0b0b0f;
+      --panel:#11111a;
+      --panel2:#0f0f16;
+      --text:#f6f6f8;
+      --muted:#b9bcc6;
+      --line:rgba(255,255,255,.10);
+      --gold:#d6b15e;
+      --gold2:#b68a2e;
+      --shadow:0 24px 60px rgba(0,0,0,.55);
+      --radius:18px;
+      --radius2:26px;
+      --max:1200px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(214,177,94,.18), transparent 60%),
+        radial-gradient(900px 500px at 90% 0%, rgba(214,177,94,.10), transparent 55%),
+        linear-gradient(180deg, #07070a 0%, #0b0b0f 40%, #07070a 100%);
+      overflow-x:hidden;
+    }
+    a{color:inherit; text-decoration:none}
+    img{max-width:100%; display:block}
+    .container{max-width:var(--max); margin:0 auto; padding:0 22px}
+    .pill{
+      display:inline-flex; gap:10px; align-items:center;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      padding:10px 14px;
+      border-radius:999px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .dot{width:8px;height:8px;border-radius:999px;background:var(--gold)}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:13px 16px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      font-weight:600;
+      transition:.2s ease;
+      cursor:pointer;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.09)}
+    .btn.primary{
+      background:linear-gradient(180deg, var(--gold) 0%, var(--gold2) 100%);
+      color:#0b0b0f;
+      border:0;
+      box-shadow:0 16px 40px rgba(214,177,94,.18);
+    }
+    .btn.primary:hover{filter:brightness(1.03)}
+    .btn.ghost{background:transparent}
+    .kbd{
+      font-size:12px;
+      padding:4px 8px;
+      border:1px solid var(--line);
+      border-bottom-color:rgba(255,255,255,.18);
+      border-radius:8px;
+      background:rgba(255,255,255,.05);
+      color:var(--muted);
+    }
+
+    /* Top bar */
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(14px);
+      background:rgba(11,11,15,.72);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .topbar-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 0;
+      gap:14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      min-width:220px;
+    }
+    .logo{
+      width:40px;height:40px;border-radius:14px;
+      background:
+        radial-gradient(16px 16px at 30% 30%, rgba(255,255,255,.20), transparent 70%),
+        linear-gradient(180deg, rgba(214,177,94,.95), rgba(182,138,46,.95));
+      box-shadow:0 12px 26px rgba(214,177,94,.18);
+      position:relative;
+    }
+    .logo:after{
+      content:"";
+      position:absolute; inset:10px 12px;
+      border:2px solid rgba(11,11,15,.9);
+      border-radius:10px;
+      transform:skewX(-10deg);
+    }
+    .brand strong{
+      font-family:"Playfair Display", serif;
+      letter-spacing:.3px;
+      font-size:18px;
+      line-height:1;
+      display:block;
+    }
+    .brand span{
+      display:block;
+      font-size:12px;
+      color:var(--muted);
+      margin-top:2px;
+    }
+    nav{
+      display:flex; align-items:center; gap:18px;
+      color:var(--muted);
+      font-weight:600;
+      font-size:14px;
+    }
+    nav a{padding:10px 10px; border-radius:10px}
+    nav a:hover{background:rgba(255,255,255,.06); color:var(--text)}
+    .right{
+      display:flex; align-items:center; gap:10px;
+      justify-content:flex-end;
+      min-width:220px;
+    }
+    .phone{
+      display:none;
+      color:var(--muted);
+      font-size:13px;
+      border:1px solid var(--line);
+      padding:10px 12px;
+      border-radius:12px;
+      background:rgba(255,255,255,.04);
+    }
+    .menu-btn{display:none}
+
+    /* Hero */
+    .hero{
+      position:relative;
+      padding:44px 0 30px;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:22px;
+      align-items:stretch;
+    }
+    .hero-card{
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:var(--radius2);
+      overflow:hidden;
+      background:
+        radial-gradient(800px 400px at 25% 0%, rgba(214,177,94,.16), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+      position:relative;
+      min-height:520px;
+    }
+    .hero-card:before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        linear-gradient(90deg, rgba(11,11,15,.92) 0%, rgba(11,11,15,.70) 45%, rgba(11,11,15,.25) 100%),
+	url("main.png");
+      background-size:cover;
+      background-position:center;
+      filter:saturate(1.05) contrast(1.02);
+      transform:scale(1.02);
+    }
+    .hero-content{
+      position:relative;
+      padding:34px 34px 26px;
+      height:100%;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:18px;
+    }
+    .hero h1{
+      font-family:"Playfair Display", serif;
+      font-weight:700;
+      letter-spacing:.2px;
+      margin:14px 0 10px;
+      font-size:46px;
+      line-height:1.08;
+      max-width:650px;
+    }
+    .hero p{
+      margin:0;
+      color:rgba(255,255,255,.78);
+      max-width:620px;
+      font-size:16px;
+      line-height:1.7;
+    }
+    .hero-actions{
+      display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+      margin-top:14px;
+    }
+    .hero-badges{
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin-top:18px;
+      color:rgba(255,255,255,.68);
+      font-size:13px;
+    }
+    .badge{
+      display:inline-flex; gap:8px; align-items:center;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.22);
+      padding:10px 12px;
+      border-radius:999px;
+      backdrop-filter:blur(10px);
+    }
+    .badge svg{opacity:.9}
+
+    /* Quick quote placeholder */
+    .quote{
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:var(--radius2);
+      background:
+        radial-gradient(600px 300px at 20% 0%, rgba(214,177,94,.14), transparent 60%),
+        linear-gradient(180deg, rgba(17,17,26,.92), rgba(15,15,22,.92));
+      box-shadow:var(--shadow);
+      padding:18px;
+      min-height:520px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      position:relative;
+      overflow:hidden;
+    }
+    .quote:before{
+      content:"";
+      position:absolute;
+      width:520px;height:520px;
+      right:-320px; top:-320px;
+      background:radial-gradient(circle at 30% 30%, rgba(214,177,94,.22), transparent 60%);
+      filter:blur(2px);
+    }
+    .quote h2{
+      margin:0;
+      font-size:18px;
+      letter-spacing:.2px;
+    }
+    .quote small{color:var(--muted)}
+
+    .quote-subtitle{
+      margin-top:8px;
+      margin-bottom:6px;
+      line-height:1.55;
+    }
+    .quote .panel{
+      position:relative;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.03);
+      border-radius:16px;
+      padding:14px;
+    }
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-bottom:12px;
+    }
+    .label{font-size:12px; color:var(--muted); font-weight:700; letter-spacing:.4px; text-transform:uppercase}
+    .input{
+      width:100%;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.25);
+      color:var(--text);
+      padding:12px 12px;
+      outline:none;
+      font-size:14px;
+    }
+
+    /* Google Places dropdown (pac-container) styling to match dark theme */
+    .pac-container{
+      background: rgba(18,18,22,.98);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 14px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.55);
+      overflow: hidden;
+      z-index: 99999;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    .pac-item{
+      padding: 10px 12px;
+      border-top: 1px solid rgba(255,255,255,.06);
+      color: rgba(255,255,255,.88);
+    }
+    .pac-item:hover{
+      background: rgba(214,177,94,.12);
+    }
+    .pac-item-query{
+      color: #fff;
+      font-weight: 700;
+    }
+    .pac-matched{
+      color: #fff;
+    }
+    .row{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    .quote .note{
+      font-size:12px;
+      color:rgba(255,255,255,.70);
+      line-height:1.55;
+    }
+    .price-box{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px;
+      border-radius:16px;
+      border:1px solid rgba(214,177,94,.22);
+      background:linear-gradient(180deg, rgba(214,177,94,.14), rgba(0,0,0,.12));
+    
+      margin-top:16px;}
+    .price-box strong{
+      font-family:"Playfair Display", serif;
+      font-size:26px;
+      letter-spacing:.3px;
+    }
+    .price-box span{
+      font-size:12px; color:rgba(255,255,255,.75)
+    }
+    .quote .actions{
+      display:flex; gap:10px; flex-wrap:wrap;
+    
+      margin-top:14px;}
+
+    /* Sections */
+    section{padding:34px 0}
+    .section-title{
+      display:flex; align-items:flex-end; justify-content:space-between;
+      gap:16px; margin-bottom:16px;
+    }
+    .section-title h3{
+      margin:0;
+      font-family:"Playfair Display", serif;
+      font-size:28px;
+      letter-spacing:.2px;
+    }
+    .section-title p{
+      margin:0;
+      color:var(--muted);
+      max-width:560px;
+      line-height:1.6;
+      font-size:14px;
+    }
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:14px;
+    }
+    .card{
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:var(--radius);
+      background:rgba(255,255,255,.03);
+      padding:16px;
+      box-shadow:0 14px 40px rgba(0,0,0,.25);
+    }
+    .card h4{margin:10px 0 8px; font-size:16px}
+    .card p{margin:0; color:rgba(255,255,255,.72); font-size:14px; line-height:1.65}
+    .icon{
+      width:44px;height:44px;border-radius:14px;
+      display:grid; place-items:center;
+      background:rgba(214,177,94,.14);
+      border:1px solid rgba(214,177,94,.22);
+    }
+
+    /* Fleet */
+    .fleet{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      align-items:stretch;
+    }
+    .fleet .vehicle{
+      overflow:hidden;
+      padding:0;
+    }
+    .vehicle .media{
+      height:190px;
+      background-size:cover;
+      background-position:center;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .vehicle .body{padding:16px}
+    .vehicle .meta{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:10px;
+      color:rgba(255,255,255,.72);
+      font-size:12px;
+    }
+    .chip{
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.18);
+      padding:6px 10px;
+      border-radius:999px;
+    }
+
+    /* Cities list */
+    .cities{
+      display:flex; flex-wrap:wrap; gap:10px;
+    }
+
+    /* CTA */
+    .cta{
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:var(--radius2);
+      padding:22px;
+      background:
+        radial-gradient(800px 300px at 20% 0%, rgba(214,177,94,.18), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px;
+      overflow:hidden;
+      position:relative;
+    }
+    .cta:after{
+      content:"";
+      position:absolute; inset:-1px;
+      border-radius:var(--radius2);
+      pointer-events:none;
+      background:linear-gradient(90deg, rgba(214,177,94,.22), transparent 30%, transparent 70%, rgba(214,177,94,.18));
+      mask:linear-gradient(#000, transparent);
+      opacity:.35;
+    }
+    .cta h3{
+      margin:0;
+      font-family:"Playfair Display", serif;
+      font-size:26px;
+    }
+    .cta p{margin:8px 0 0; color:rgba(255,255,255,.74); line-height:1.6; max-width:560px}
+
+    /* Footer */
+    footer{
+      padding:26px 0 40px;
+      color:rgba(255,255,255,.62);
+      border-top:1px solid rgba(255,255,255,.08);
+      margin-top:22px;
+    }
+    .footer-grid{
+      display:grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap:18px;
+    }
+    .footer-grid a{color:rgba(255,255,255,.70)}
+    .footer-grid a:hover{color:var(--text)}
+    .small{font-size:13px; line-height:1.6}
+    .muted{color:var(--muted)}
+
+    /* Mobile */
+    @media (max-width: 980px){
+      .hero-grid{grid-template-columns:1fr}
+      .hero-card,.quote{min-height:auto}
+      .hero h1{font-size:38px}
+      .grid-3{grid-template-columns:1fr}
+      .fleet{grid-template-columns:1fr}
+      .right{min-width:auto}
+      nav{display:none}
+      .menu-btn{display:inline-flex}
+      .phone{display:none}
+    }
+  
+    /* Header contact + dropdown menus */
+    .header-contact{
+      display:flex; align-items:center; gap:14px;
+      color:var(--muted);
+      font-size:13px;
+      border:1px solid var(--line);
+      padding:10px 12px;
+      border-radius:12px;
+      background:rgba(255,255,255,.04);
+      white-space:nowrap;
+    }
+    .header-contact a{color:inherit; text-decoration:none}
+    .header-contact a:hover{color:var(--text)}
+    .header-contact .sep{opacity:.45}
+
+    @media (max-width: 980px){
+      .header-contact{display:none}
+    }
+
+  
+    /* Header layout fixes (prevent contact overlap) */
+    .topbar-inner{flex-wrap:wrap}
+    .brand{min-width:unset}
+    .right{min-width:unset; flex-wrap:wrap}
+    nav{flex:1; justify-content:center; flex-wrap:wrap}
+    .header-contact{
+      font-size:12px;
+      padding:8px 10px;
+      gap:10px;
+      max-width:520px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    @media (max-width: 1100px){
+      .header-contact{display:none}
+    }
+
+  
+    /* FINAL HEADER OVERRIDES (one-line menu + stacked contact) */
+    @media (min-width: 981px){
+      .topbar-inner{flex-wrap:nowrap !important}
+      nav{flex:0 0 auto !important; justify-content:center !important; flex-wrap:nowrap !important; white-space:nowrap !important}
+      nav a, nav .nav-link{white-space:nowrap !important}
+      nav{gap:14px !important}
+      .right{flex:0 0 auto !important; flex-wrap:nowrap !important}
+      .brand{flex:0 0 auto !important}
+    }
+
+    /* Contact box: email on top, phone under */
+    .header-contact{
+      display:flex !important;
+      flex-direction:column !important;
+      align-items:flex-start !important;
+      gap:4px !important;
+      line-height:1.2 !important;
+      max-width:none !important;
+      overflow:visible !important;
+      text-overflow:clip !important;
+      white-space:nowrap !important;
+    }
+    .header-contact .sep{display:none !important}
+
+  
+    /* RESPONSIVE FIT (desktop + mobile) */
+    /* Desktop: keep header on one line without overflow */
+    @media (min-width: 981px){
+      .topbar-inner{flex-wrap:nowrap}
+      nav{flex:1 1 auto; justify-content:center; flex-wrap:nowrap; white-space:nowrap}
+      .right{flex:0 0 auto}
+      .brand{flex:0 0 auto}
+      .container{max-width:var(--max)}
+    }
+
+    /* Mobile: collapse nav, keep header clean */
+    @media (max-width: 980px){
+      .topbar-inner{flex-wrap:nowrap}
+      nav{display:none !important}
+      .menu-btn{display:inline-flex !important}
+      .header-contact{display:none !important}
+      .brand strong{font-size:16px}
+      .brand span{font-size:11px}
+      .right{gap:8px}
+      .btn{padding:12px 14px}
+      .btn.primary{padding:12px 14px}
+      .hero{padding:28px 0 22px}
+      .hero h1{font-size:34px}
+      .hero-card:before{
+        background:
+          linear-gradient(180deg, rgba(11,11,15,.82) 0%, rgba(11,11,15,.55) 55%, rgba(11,11,15,.30) 100%),
+          url("main.png");
+        background-size:cover;
+        background-position:center;
+      }
+    }
+
+    /* GENUINE HOME SECTIONS (new design) */
+    .alt-wrap{padding:54px 0}
+    .alt-head{
+      display:flex; align-items:flex-end; justify-content:space-between;
+      gap:18px; margin-bottom:18px;
+    }
+    .alt-head h2{
+      margin:0;
+      font-family:"Playfair Display", serif;
+      font-size:34px;
+      letter-spacing:.2px;
+      line-height:1.12;
+    }
+    .alt-head p{
+      margin:0;
+      color:rgba(255,255,255,.72);
+      max-width:520px;
+      line-height:1.65;
+      font-size:14px;
+    }
+
+    .alt-grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:16px;
+      align-items:stretch;
+      margin-top:14px;
+    }
+    .alt-stack{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:16px;
+    }
+
+    .alt-card{
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:22px;
+      background:
+        radial-gradient(600px 240px at 15% 0%, rgba(214,177,94,.15), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      box-shadow:0 18px 55px rgba(0,0,0,.35);
+      padding:18px;
+      overflow:hidden;
+      position:relative;
+      min-height:160px;
+    }
+    .alt-card:after{
+      content:"";
+      position:absolute; inset:-1px;
+      background:linear-gradient(90deg, rgba(214,177,94,.18), transparent 35%, transparent 65%, rgba(214,177,94,.12));
+      opacity:.22;
+      pointer-events:none;
+      border-radius:22px;
+      mask:linear-gradient(#000, transparent);
+    }
+    .alt-top{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+      position:relative;
+    }
+    .alt-icon{
+      width:44px; height:44px;
+      border-radius:16px;
+      display:grid; place-items:center;
+      background:rgba(214,177,94,.14);
+      border:1px solid rgba(214,177,94,.22);
+      flex:0 0 auto;
+    }
+    .alt-kicker{
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.4px;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.70);
+      margin:0 0 6px;
+    }
+    .alt-card h3{
+      margin:0 0 8px;
+      font-size:18px;
+      letter-spacing:.15px;
+    }
+    .alt-card p{
+      margin:0;
+      color:rgba(255,255,255,.74);
+      font-size:13px;
+      line-height:1.7;
+      max-width:520px;
+      position:relative;
+    }
+
+    /* Callout: split layout */
+    .alt-callout{
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:26px;
+      overflow:hidden;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      box-shadow:0 20px 60px rgba(0,0,0,.45);
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      margin-top:22px;
+    }
+    .alt-callout .media{
+      min-height:230px;
+      background:
+        linear-gradient(90deg, rgba(11,11,15,.55), rgba(11,11,15,.15)),
+url("https://images.unsplash.com/photo-1767749995462-9fe0890d5960?auto=format&fit=crop&w=2200&q=80");
+
+      background-size:cover;
+      background-position:center;
+    }
+    .alt-callout .content{
+      padding:22px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:14px;
+    }
+    .alt-callout h3{
+      margin:0;
+      font-family:"Playfair Display", serif;
+      font-size:26px;
+      line-height:1.12;
+      letter-spacing:.2px;
+    }
+    .alt-callout .lead{
+      margin:10px 0 0;
+      color:rgba(255,255,255,.76);
+      font-size:14px;
+      line-height:1.7;
+    }
+    .alt-actions{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      margin-top:8px;
+    }
+    .alt-mini{
+      font-size:12px;
+      color:rgba(255,255,255,.62);
+      margin-top:8px;
+    }
+
+    @media (max-width: 980px){
+      .alt-wrap{padding:40px 0}
+      .alt-head{flex-direction:column; align-items:flex-start}
+      .alt-head h2{font-size:28px}
+      .alt-grid{grid-template-columns:1fr}
+      .alt-stack{grid-template-columns:1fr}
+      .alt-callout{grid-template-columns:1fr}
+      .alt-callout .media{min-height:190px}
+    }
+
+  </style>
+</head>
+
+<body>
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="container">
+      <div class="topbar-inner">
+	<a class="brand" href="index.html" aria-label="Black Car Limousines">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+	<strong>Black Car Limousines</strong>
+	<span>Luxury Chauffeur Service in the GTA</span>
+          </div>
+        </a>
+
+        
+        
+        <nav aria-label="Primary">
+          <a class="nav-link" href="index.html">Home</a>
+          <a class="nav-link" href="services.html">Services</a>
+          <a class="nav-link" href="fleet.html">Fleet</a>
+          <a class="nav-link" href="cities.html">Cities</a>
+          <a class="nav-link" href="about.html">About</a>
+          <a class="nav-link" href="contact.html">Contact</a>
+        </nav>
+
+        
+        <div class="right">
+          
+          
+          <div class="header-contact" aria-label="Contact in header">
+            <a href="mailto:info@blackcarlimousines.com">✉️ info@blackcarlimousines.com</a>
+            <a href="tel:+16472219090">📞 (647) 221-9090</a>
+          </div>
+<a class="btn primary" href="#quote">Get a Quote</a>
+          <button class="btn menu-btn" type="button" onclick="alert('Mobile menu can be added next.')" aria-label="Open menu">☰</button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main id="top" class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <!-- Left: hero image + copy -->
+        <div class="hero-card">
+          <div class="hero-content">
+            <div>
+              <div class="pill"><span class="dot"></span> Premium • On-time • Discreet • Professional Chauffeurs</div>
+
+              <h1>Luxury Fleet Chauffeur Service in the GTA</h1>
+
+              <p>
+                Airport transfers, corporate travel, weddings, and VIP events — delivered with a quiet luxury experience.
+                Clean fleet, professional drivers, and fast booking with clear pricing.
+              </p>
+
+              <div class="hero-actions">
+                <a class="btn primary" href="#quote">Instant Quote</a>
+                <a class="btn" href="services.html">Explore Services</a>
+                <span class="kbd">24/7 Support</span>
+              </div>
+
+              <div class="hero-badges" aria-label="Highlights">
+                <div class="badge">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 22s7-4.5 7-11V6l-7-3-7 3v5c0 6.5 7 11 7 11Z" stroke="currentColor" stroke-width="1.8"/></svg>
+                  Licensed & insured
+                </div>
+                <div class="badge">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 7h-9a4 4 0 1 0 0 8h9V7Z" stroke="currentColor" stroke-width="1.8"/><path d="M16 11h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+                  Transparent pricing
+                </div>
+                <div class="badge">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 13V7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6" stroke="currentColor" stroke-width="1.8"/><path d="M6 13h12l1.5 6H4.5L6 13Z" stroke="currentColor" stroke-width="1.8"/></svg>
+                  Premium fleet
+                </div>
+              </div>
+            </div></div>
+        </div>
+
+        <!-- Right: Quote widget (placeholder UI only for now) -->
+        <aside id="quote" class="quote" aria-label="Instant quote">
+  <div style="position:relative">
+    <h2>Instant Quote</h2>
+    <div class="muted quote-subtitle">
+      Enter pickup & drop-off to see an estimated rate instantly.
+    </div>
+
+    <div class="card quote-card" style="margin-top:14px">
+      <div class="field">
+        <div class="label">Pickup location</div>
+        <input id="pickup" class="input" placeholder="Start typing an address or city…" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <div class="label">Drop-off location</div>
+        <input id="dropoff" class="input" placeholder="Destination (Airport, hotel, etc.)" autocomplete="off">
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <div class="label">Vehicle</div>
+          <select id="vehicle" class="input" aria-label="Vehicle">
+            <option value="sedan">Sedan</option>
+            <option value="suv">SUV</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <div class="label">Passengers</div>
+          <select id="passengers" class="input" aria-label="Passengers">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+          </select>
+        </div>
+      </div><div id="quoteMsg" class="note" style="color:#ff6b6b; margin-top:10px; display:none"></div>
+      <div id="quoteHint" class="note" style="margin-top:10px;">
+        Tip: select a suggestion from the dropdown for both locations.
+      </div>
+    </div>
+
+    <div class="price-box" aria-label="Estimated price">
+      <div>
+        <span>Estimated rate</span>
+        <div><strong id="rateDisplay">—</strong></div>
+      </div>
+      <div style="text-align:right">
+        <span>Distance</span>
+        <div class="muted" style="font-weight:700"><span id="distanceDisplay">—</span> km</div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="calcBtn" class="btn primary" type="button">Calculate Price</button>
+      <button id="bookBtn" class="btn" type="button">Request Booking</button>
+    </div>
+
+    <div class="note">
+      Need help now? Call <a href="tel:+16472219090" style="text-decoration:underline">+1 (647) 221-9090</a>
+    </div>
+  </div>
+</aside>
+      </div>
+    </div>
+  </main>
+
+  <!-- Experience -->
+  <section class="alt-wrap" aria-label="Experience">
+    <div class="container">
+      <div class="alt-head">
+        <div>
+          <h2>Ride smarter. Arrive calmer.</h2>
+          <p>Premium chauffeur service across the GTA — designed to feel effortless, from pickup to drop-off.</p>
+        </div>
+      </div>
+
+      <div class="alt-grid">
+        <div class="alt-card">
+          <div class="alt-top">
+            <div>
+              <div class="alt-kicker">Professional</div>
+              <h3>Trained chauffeurs, clean presentation</h3>
+              <p>Experienced drivers, consistent standards, and a smooth luxury ride experience every time.</p>
+            </div>
+            <div class="alt-icon" aria-hidden="true">🛡️</div>
+          </div>
+        </div>
+
+        <div class="alt-stack">
+          <div class="alt-card">
+            <div class="alt-top">
+              <div>
+                <div class="alt-kicker">Value</div>
+                <h3>Fair pricing, clear booking</h3>
+                <p>Simple quotes and quick confirmations — no confusion, no stress.</p>
+              </div>
+              <div class="alt-icon" aria-hidden="true">💳</div>
+            </div>
+          </div>
+
+          <div class="alt-card">
+            <div class="alt-top">
+              <div>
+                <div class="alt-kicker">Comfort</div>
+                <h3>Fleet options for every trip</h3>
+                <p>Sedan and SUV options for every trip — up to 14 passengers for larger groups.</p>
+              </div>
+              <div class="alt-icon" aria-hidden="true">🚘</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="alt-callout" aria-label="Callout">
+        <div class="media" aria-hidden="true"></div>
+        <div class="content">
+          <div>
+            <div class="alt-kicker">Toronto & GTA</div>
+            <h3>Need a ride today?</h3>
+            <p class="lead">
+              Airport transfers, city rides, corporate travel, and events — we’ll confirm availability quickly.
+            </p>
+          </div>
+
+          <div>
+            <div class="alt-actions">
+              <a class="btn primary" href="tel:+16472219090">Call (647) 221-9090</a>
+              <a class="btn" href="mailto:info@blackcarlimousines.com">Email us</a>
+              <a class="btn ghost" href="#quote">Instant Quote</a>
+            </div>
+            <div class="alt-mini">Fast response • Professional chauffeurs • Luxury Mercedes experience</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<footer id="contact">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+            <div class="logo" aria-hidden="true" style="width:34px;height:34px;border-radius:12px"></div>
+            <div>
+	<strong style="font-family:'Playfair Display',serif; font-size:16px;">Black Car Limousines</strong>
+              <div class="small muted">GTA Chauffeur & Airport Transfers</div>
+            </div>
+          </div>
+          <div class="small">
+            Premium service, professional chauffeurs, and transparent pricing. Designed for airport travel, corporate clients, and special events.
+          </div>
+        </div>
+
+        <div>
+          <strong>Quick links</strong>
+          <div class="small" style="margin-top:10px; display:grid; gap:8px;">
+            <a href="services.html">Services</a>
+            <a href="fleet.html">Fleet</a>
+            <a href="#quote">Instant Quote</a>
+            <a href="about.html#how">How it works</a>
+          </div>
+        </div>
+
+        <div>
+          <strong>Contact</strong>
+     <div class="small" style="margin-top:10px; display:grid; gap:10px;">
+  <div>
+    <div class="muted" style="font-weight:700;">Phone</div>
+    <a href="tel:+16472219090" style="text-decoration:underline">+1 (647) 221-9090</a>
+  </div>
+
+  <div>
+    <div class="muted" style="font-weight:700;">SMS</div>
+    <a href="sms:+16472219090" style="text-decoration:underline">+1 (647) 221-9090</a>
+  </div>
+
+  <div>
+    <div class="muted" style="font-weight:700;">WhatsApp</div>
+    <a href="https://wa.me/16472219090" style="text-decoration:underline">+1 (647) 221-9090</a>
+  </div>
+
+  <div>
+    <div class="muted" style="font-weight:700;">Email</div>
+    <a href="mailto:info@blackcarlimousines.com" style="text-decoration:underline">info@blackcarlimousines.com</a>
+  </div>
+
+  <div>
+    <div class="muted" style="font-weight:700;">Address</div>
+    <div>7 Questor Court, Hamilton, ON, L8W 1K3, Canada</div>
+  </div>
+</div>
+
+            <div class="muted">24/7 — GTA & surrounding areas</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="small muted" style="margin-top:18px; text-align:center;">
+        © <span id="year"></span> Elite Limo. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  // Footer year
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // ========= Instant Quote (Google Places + distance pricing) =========
+  // IMPORTANT: Paste your Google Maps JavaScript API key (with Places + Distance Matrix enabled) below.
+  // Example: const GOOGLE_MAPS_API_KEY = "AIza....";
+  const GOOGLE_MAPS_API_KEY = "AIzaSyD00hPzMmT1FEwkbxbRIZcl-8YaJIg9xv8";
+
+  const els = {
+    pickup: document.getElementById("pickup"),
+    dropoff: document.getElementById("dropoff"),
+    vehicle: document.getElementById("vehicle"),
+    passengers: document.getElementById("passengers"),
+    rate: document.getElementById("rateDisplay"),
+    distance: document.getElementById("distanceDisplay"),
+    msg: document.getElementById("quoteMsg"),
+    calcBtn: document.getElementById("calcBtn"),
+    bookBtn: document.getElementById("bookBtn"),
+    hint: document.getElementById("quoteHint"),
+  };
+
+  let pickupPlace = null;
+  let dropoffPlace = null;
+  let lastKm = null;
+  let distanceSvc = null;
+
+  function showMsg(text){
+    els.msg.textContent = text;
+    els.msg.style.display = "block";
+  }
+  function clearMsg(){
+    els.msg.textContent = "";
+    els.msg.style.display = "none";
+  }
+
+  function money(n){
+    if (typeof n !== "number" || !isFinite(n)) return "—";
+    return "$" + n.toFixed(2);
+  }
+
+  function computePrice(vehicle, km){
+    if (typeof km !== "number" || !isFinite(km) || km <= 0) return null;
+
+    if (vehicle === "sedan"){
+      if (km < 25) return 50;
+      if (km <= 100) return km * 2;
+      return (100 * 2) + ((km - 100) * 1.75);
+    }
+
+    // suv
+    if (km < 30) return 75;
+    if (km <= 100) return km * 2.5;
+    return (100 * 2.5) + ((km - 100) * 2);
+  }
+
+  function enforcePassengerRules(){
+    const p = parseInt(els.passengers.value || "1", 10);
+
+    // 1–3: Sedan or SUV, 4–8: SUV only
+    const sedanOption = els.vehicle.querySelector('option[value="sedan"]');
+    if (!sedanOption) return;
+
+    if (p >= 4){
+      sedanOption.disabled = true;
+      els.vehicle.value = "suv";
+    } else {
+      sedanOption.disabled = false;
+    }
+  }
+
+  function updateDisplays(){
+    if (typeof lastKm === "number" && isFinite(lastKm)){
+      els.distance.textContent = lastKm.toFixed(1);
+      const price = computePrice(els.vehicle.value, lastKm);
+      els.rate.textContent = price == null ? "—" : money(price);
+    } else {
+      els.distance.textContent = "—";
+      els.rate.textContent = "—";
+    }
+  }
+
+  let geocoder = null;
+
+function geocodeAddress(address){
+  return new Promise((resolve, reject) => {
+    if (!address) return reject(new Error("EMPTY_ADDRESS"));
+    if (!geocoder) geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ address }, (results, status) => {
+      if (status !== "OK" || !results || !results[0]){
+        return reject(new Error(status || "GEOCODE_FAILED"));
+      }
+      const r = results[0];
+      resolve({
+        place_id: r.place_id,
+        formatted_address: r.formatted_address || address,
+      });
+    });
+  });
+}
+
+async function ensurePlaceId(which){
+  const el = which === "pickup" ? els.pickup : els.dropoff;
+  let place = which === "pickup" ? pickupPlace : dropoffPlace;
+
+  if (place?.place_id) return place;
+
+  const raw = (el.value || "").trim();
+  if (!raw) return null;
+
+  try{
+    const geo = await geocodeAddress(raw);
+    const normalized = { place_id: geo.place_id, formatted_address: geo.formatted_address };
+    el.value = geo.formatted_address;
+    if (which === "pickup") pickupPlace = normalized;
+    else dropoffPlace = normalized;
+    return normalized;
+  }catch{
+    return null;
+  }
+}
+
+async function calculateDistanceAndPrice(){
+  clearMsg();
+  enforcePassengerRules();
+
+  // Must run on http(s) for Google APIs (and most API key restrictions rely on referrers)
+  if (location.protocol === "file:"){
+    showMsg("Google Maps needs http(s). Open this page via a local server (not file://) or host it online.");
+    return;
+  }
+
+  if (!distanceSvc){
+    showMsg("Google Maps is still loading. Please try again in a moment.");
+    return;
+  }
+
+  // Allow either: selecting from autocomplete OR typing (we'll geocode typed addresses)
+  const p = await ensurePlaceId("pickup");
+  const d = await ensurePlaceId("dropoff");
+
+  if (!p?.place_id || !d?.place_id){
+    showMsg("Please enter valid pickup and drop-off locations (select a suggestion or type a full address).");
+    return;
+  }
+
+  distanceSvc.getDistanceMatrix(
+    {
+      origins: [{ placeId: p.place_id }],
+      destinations: [{ placeId: d.place_id }],
+      travelMode: google.maps.TravelMode.DRIVING,
+      unitSystem: google.maps.UnitSystem.METRIC,
+    },
+    (resp, status) => {
+      try{
+        if (status !== "OK"){
+          const extra = resp?.error_message ? (" " + resp.error_message) : "";
+          if (status === "REQUEST_DENIED"){
+            showMsg("Google Maps request was denied. Check your API key, billing, enabled APIs (Places + Distance Matrix), and HTTP referrer restrictions." + extra);
+          } else {
+            showMsg("Couldn't calculate distance (status: " + status + ")." + extra);
+          }
+          lastKm = null;
+          updateDisplays();
+          return;
+        }
+
+        const row = resp?.rows?.[0];
+        const el0 = row?.elements?.[0];
+
+        if (!el0 || el0.status !== "OK"){
+          const s = el0?.status || "UNKNOWN";
+          showMsg("Couldn't calculate distance. Try more specific addresses (status: " + s + ").");
+          lastKm = null;
+          updateDisplays();
+          return;
+        }
+
+        const meters = el0.distance.value;
+        const km = meters / 1000;
+        lastKm = km;
+
+        updateDisplays();
+      }catch{
+        showMsg("Couldn't calculate distance. Please try again.");
+        lastKm = null;
+        updateDisplays();
+      }
+    }
+  );
+}
+
+  // Called by Google Maps script
+  window.initQuote = function initQuote(){
+    try{
+      const opts = { fields: ["place_id", "formatted_address", "geometry", "name"] };
+      const acPickup = new google.maps.places.Autocomplete(els.pickup, opts);
+      const acDropoff = new google.maps.places.Autocomplete(els.dropoff, opts);
+
+      acPickup.addListener("place_changed", () => {
+        pickupPlace = acPickup.getPlace();
+        lastKm = null;
+        updateDisplays();
+        clearMsg();
+      });
+
+      acDropoff.addListener("place_changed", () => {
+        dropoffPlace = acDropoff.getPlace();
+        lastKm = null;
+        updateDisplays();
+        clearMsg();
+      });
+
+      distanceSvc = new google.maps.DistanceMatrixService();
+
+      // Hook UI
+
+// Reset saved places if user edits text manually
+const clearPlaces = () => { lastKm = null; updateDisplays(); };
+els.pickup.addEventListener("input", () => { pickupPlace = null; clearPlaces(); });
+els.dropoff.addEventListener("input", () => { dropoffPlace = null; clearPlaces(); });
+els.pickup.addEventListener("keydown", (e) => { if (e.key === "Enter"){ e.preventDefault(); calculateDistanceAndPrice(); } });
+els.dropoff.addEventListener("keydown", (e) => { if (e.key === "Enter"){ e.preventDefault(); calculateDistanceAndPrice(); } });
+      els.passengers.addEventListener("change", () => { enforcePassengerRules(); updateDisplays(); });
+      els.vehicle.addEventListener("change", () => { enforcePassengerRules(); updateDisplays(); });
+      els.calcBtn.addEventListener("click", calculateDistanceAndPrice);
+
+      els.bookBtn.addEventListener("click", () => {
+        // simple placeholder for now (keeps UI consistent)
+        alert("Thanks! Please contact us to finalize booking: info@blackcarlimousines.com");
+      });
+
+      enforcePassengerRules();
+      updateDisplays();
+
+      if (location.protocol === "file:"){
+        showMsg("Google Maps autocomplete won't work when opened as a file (file://). Open via a local server or hosted website.");
+      } else if (!GOOGLE_MAPS_API_KEY){
+        showMsg("Google Maps API key is missing. Add your key in the code (GOOGLE_MAPS_API_KEY) to enable address autocomplete.");
+      }
+    } catch (e){
+      showMsg("Google Maps failed to initialize. Check your API key and that the Places API is enabled.");
+    }
+  };
+
+  // Load Google Maps script (Places library)
+  (function loadGoogleMaps(){
+    if (!GOOGLE_MAPS_API_KEY){
+      // Still show UI; message will explain.
+      return;
+    }
+    const s = document.createElement("script");
+    s.src =
+      "https://maps.googleapis.com/maps/api/js?key=" +
+      encodeURIComponent(GOOGLE_MAPS_API_KEY) +
+      "&libraries=places&callback=initQuote";
+    s.async = true;
+    s.defer = true;
+    document.head.appendChild(s);
+  })();
+</script>
+</body>
+</html>
