@@ -287,6 +287,25 @@
       outline:none;
       font-size:14px;
     }
+    /* Google Places dropdown (pac-container) styling to match dark theme */
+    .pac-container{
+      background: rgba(18,18,22,.98);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 14px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.55);
+      overflow: hidden;
+      z-index: 9999;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    .pac-item{
+      padding: 10px 12px;
+      border-top: 1px solid rgba(255,255,255,.06);
+      color: rgba(255,255,255,.88);
+    }
+    .pac-item:hover{ background: rgba(214,177,94,.12); }
+    .pac-item-query{ color:#fff; font-weight:700; }
+    .pac-matched{ color:#fff; }
+
     .row{display:grid; grid-template-columns:1fr 1fr; gap:10px}
     .quote .note{
       font-size:12px;
@@ -1013,6 +1032,12 @@
     const CREATE_CHECKOUT_ENDPOINT = "/api/create-checkout-session"; // you will implement on hosting (Vercel/Node)
     const CURRENCY = "cad";
 
+
+    // Google Places state (Book a Ride)
+    let brPickupPlace = null;
+    let brDropoffPlace = null;
+    let brPickupAC = null;
+    let brDropoffAC = null;
     const stepEls = Array.from(document.querySelectorAll('.stepper .step'));
     const stepPanels = {
       1: document.getElementById('br-step-1'),
@@ -1023,6 +1048,63 @@
     const el = (id)=>document.getElementById(id);
     const val = (id)=> (el(id)?.value || "").trim();
     const setText = (id, text)=>{ const n=el(id); if(n) n.textContent = text; };
+
+    // Called by Google Maps script (Places library)
+    window.initBookRideMaps = function initBookRideMaps(){
+      try{
+        const pickupInput = el("br_pickup");
+        const dropoffInput = el("br_dropoff");
+        if(!pickupInput || !dropoffInput) return;
+
+        const opts = {
+          fields: ["place_id", "formatted_address", "geometry", "name"],
+          componentRestrictions: { country: "ca" }
+        };
+
+        brPickupAC = new google.maps.places.Autocomplete(pickupInput, opts);
+        brDropoffAC = new google.maps.places.Autocomplete(dropoffInput, opts);
+
+        brPickupAC.addListener("place_changed", () => {
+          brPickupPlace = brPickupAC.getPlace();
+          lastDistanceKey = "";
+          brDistanceKm = null;
+          brDistanceText = "";
+          refreshSummary();
+          updatePricingIfReady();
+        });
+
+        brDropoffAC.addListener("place_changed", () => {
+          brDropoffPlace = brDropoffAC.getPlace();
+          lastDistanceKey = "";
+          brDistanceKm = null;
+          brDistanceText = "";
+          refreshSummary();
+          updatePricingIfReady();
+        });
+
+        // If user types manually, clear saved Places objects
+        pickupInput.addEventListener("input", () => {
+          brPickupPlace = null;
+          lastDistanceKey = "";
+          brDistanceKm = null;
+          brDistanceText = "";
+          refreshSummary();
+        });
+
+        dropoffInput.addEventListener("input", () => {
+          brDropoffPlace = null;
+          lastDistanceKey = "";
+          brDistanceKm = null;
+          brDistanceText = "";
+          refreshSummary();
+        });
+
+      }catch(e){
+        console.warn("initBookRideMaps failed:", e);
+      }
+    };
+
+
 
     let lastDistanceKey = "";
     let brDistanceKm = null;
@@ -1469,5 +1551,31 @@
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
+
+<script>
+  // Google Maps (Places) loader for Book a Ride
+  // Uses the SAME key as index.html
+  const GOOGLE_MAPS_API_KEY = "AIza....";
+  (function loadGoogleMapsPlaces(){
+    if(!GOOGLE_MAPS_API_KEY){
+      console.warn("Google Maps API key is missing.");
+      return;
+    }
+    // already loaded?
+    if(window.google && google.maps && google.maps.places){
+      if(window.initBookRideMaps) window.initBookRideMaps();
+      return;
+    }
+    const s = document.createElement("script");
+    s.src =
+      "https://maps.googleapis.com/maps/api/js?key=" +
+      encodeURIComponent(GOOGLE_MAPS_API_KEY) +
+      "&libraries=places&callback=initBookRideMaps";
+    s.async = true;
+    s.defer = true;
+    document.head.appendChild(s);
+  })();
+</script>
+
 </body>
 </html>
