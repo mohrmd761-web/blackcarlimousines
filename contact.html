@@ -287,33 +287,6 @@
       outline:none;
       font-size:14px;
     }
-
-    /* Google Places dropdown (pac-container) styling to match dark theme */
-        .pac-container{
-          background: rgba(18,18,22,.98);
-          border: 1px solid rgba(255,255,255,.12);
-          border-radius: 14px;
-          box-shadow: 0 18px 40px rgba(0,0,0,.55);
-          overflow: hidden;
-          z-index: 99999;
-          font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-        }
-        .pac-item{
-          padding: 10px 12px;
-          border-top: 1px solid rgba(255,255,255,.06);
-          color: rgba(255,255,255,.88);
-        }
-        .pac-item:hover{
-          background: rgba(214,177,94,.12);
-        }
-        .pac-item-query{
-          color: #fff;
-          font-weight: 700;
-        }
-        .pac-matched{
-          color: #fff;
-        }
-
     .row{display:grid; grid-template-columns:1fr 1fr; gap:10px}
     .quote .note{
       font-size:12px;
@@ -771,7 +744,7 @@
       <div class="step active" data-step="1">
         <div class="num">1</div>
         <div class="label2">Enter Ride Details</div>
-        <div class="hint">Pickup, drop-off, transfer type, and waiting time.</div>
+        <div class="hint">Pickup, drop-off, and transfer type.</div>
       </div>
       <div class="line" aria-hidden="true"></div>
       <div class="step" data-step="2">
@@ -783,7 +756,7 @@
       <div class="step" data-step="3">
         <div class="num">3</div>
         <div class="label2">Place Order</div>
-        <div class="hint">Pay now via Stripe Checkout.</div>
+        <div class="hint">Review price and pay now via Stripe.</div>
       </div>
     </div>
   </div>
@@ -807,31 +780,32 @@
 
           <div class="field">
             <div class="label">Pickup Location <span class="req">*</span></div>
-            <input class="input" id="br_pickup" type="text" placeholder="e.g., Toronto Pearson (YYZ), 6301 Silver Dart Dr" / autocomplete="off">
+            <input class="input" id="br_pickup" type="text" placeholder="e.g., Toronto Pearson (YYZ), 6301 Silver Dart Dr" />
           </div>
 
           <div class="field">
             <div class="label">Drop-Off Location <span class="req">*</span></div>
-            <input class="input" id="br_dropoff" type="text" placeholder="e.g., Downtown Toronto, hotel address, etc." / autocomplete="off">
+            <input class="input" id="br_dropoff" type="text" placeholder="e.g., Downtown Toronto, hotel address, etc." />
           </div>
 
           <div class="two">
             <div class="field">
               <div class="label">Transfer Type</div>
               <select class="input" id="br_transfer">
-                <option value="One Way" selected>One Way</option>
-                <option value="Round Trip">Round Trip</option>
-                <option value="Hourly (As Directed)">Hourly (As Directed)</option>
+                <option value="one_way" selected>One Way</option>
+                <option value="round_trip">Round Trip</option>
               </select>
             </div>
             <div class="field">
-              <div class="label">Extra Waiting Hours</div>
+              <div class="label">Extra Waiting Hours <span class="muted">(round trip only)</span></div>
               <select class="input" id="br_wait">
-                <option value="No Waiting" selected>No Waiting</option>
-                <option value="1 hour">1 hour</option>
-                <option value="2 hours">2 hours</option>
-                <option value="3 hours">3 hours</option>
-                <option value="4+ hours">4+ hours</option>
+                <option value="0" selected>No Waiting</option>
+                <option value="1">1 hour</option>
+                <option value="2">2 hours</option>
+                <option value="3">3 hours</option>
+                <option value="4">4 hours</option>
+                <option value="5">5 hours</option>
+                <option value="6">6 hours</option>
               </select>
             </div>
           </div>
@@ -851,16 +825,14 @@
             <div class="label">Vehicle</div>
             <select class="input" id="br_vehicle">
               <option value="" selected disabled>Select a vehicle</option>
-              <option value="Luxury Mercedes (Up to 4 passengers)">Luxury Mercedes (Up to 4 passengers)</option>
-              <option value="Chevrolet Suburban (Up to 8 passengers)">Chevrolet Suburban (Up to 8 passengers)</option>
-              <option value="Mercedes Sprinter (Up to 12 passengers)">Mercedes Sprinter (Up to 12 passengers)</option>
-              <option value="Stretch Limousine (Up to 10 passengers)">Stretch Limousine (Up to 10 passengers)</option>
+              <option value="sedan">Sedan (1–3 passengers)</option>
+              <option value="suv">SUV (1–8 passengers)</option>
             </select>
           </div>
 
           <div class="field">
             <div class="label">Passengers <span class="muted">(optional)</span></div>
-            <input class="input" id="br_passengers" type="number" min="1" placeholder="e.g., 3" />
+            <input class="input" id="br_passengers" type="number" min="1" max="8">
           </div>
 
           <div class="help">We’ll match you with the best option if you’re not sure.</div>
@@ -890,8 +862,10 @@
             <input class="input" id="br_email" type="email" placeholder="you@email.com" />
           </div>
 
+          <div class="note" id="br_price_note" style="margin-top:10px; border:1px solid rgba(214,177,94,.22); background:rgba(214,177,94,.10); padding:10px 12px; border-radius:14px;">Enter your name to calculate price.</div>
+
           <div class="note" style="margin-top:8px;">
-            <strong>Pay Now:</strong> This will open the Stripe checkout page. (Stripe link is configurable.)
+            <strong>Pay Now:</strong> You will be redirected to Stripe Checkout. After successful payment, an internal email will be sent to dispatch (temporary).
           </div>
 
           <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
@@ -910,6 +884,7 @@
         <div class="summary">
           <div class="rowline"><span>Pickup</span><div id="br_sum_pickup">—</div></div>
           <div class="rowline"><span>Drop-off</span><div id="br_sum_dropoff">—</div></div>
+          <div class="rowline"><span>Distance</span><div id="br_sum_distance">—</div></div>
           <div class="rowline"><span>Date / Time</span><div id="br_sum_dt">—</div></div>
           <div class="rowline"><span>Transfer</span><div id="br_sum_transfer">One Way</div></div>
           <div class="rowline"><span>Waiting</span><div id="br_sum_wait">No Waiting</div></div>
@@ -922,10 +897,10 @@
         <div class="price-box" style="margin-top:12px;">
           <div>
             <div class="muted" style="font-size:12px; font-weight:800; letter-spacing:.35px; text-transform:uppercase;">Pricing</div>
-            <strong class="big">Quote on request</strong>
+            <strong class="big" id="br_price_display">—</strong>
           </div>
           <div style="text-align:right">
-            <span>Final price confirmed at checkout</span>
+            <span id="br_price_sub">Enter your name to calculate</span>
           </div>
         </div>
 
@@ -1028,72 +1003,15 @@
 
 
 <script>
-  
-  // ========= Google Places Autocomplete (Book a Ride) =========
-  // Uses the same API key as index.html
-  const CONTACT_GOOGLE_MAPS_API_KEY = "AIzaSyD00hPzMmT1FEwkbxbRIZcl-8YaJIg9xv8";
-
-  let brPickupPlace = null;
-  let brDropoffPlace = null;
-
-  window.initContactPlaces = function initContactPlaces(){
-    try{
-      const pickupEl = document.getElementById("br_pickup");
-      const dropoffEl = document.getElementById("br_dropoff");
-      if(!pickupEl || !dropoffEl) return;
-
-      const opts = { fields: ["place_id", "formatted_address", "geometry", "name"] };
-
-      const acPickup = new google.maps.places.Autocomplete(pickupEl, opts);
-      const acDropoff = new google.maps.places.Autocomplete(dropoffEl, opts);
-
-      acPickup.addListener("place_changed", () => {
-        const p = acPickup.getPlace();
-        brPickupPlace = p || null;
-        if (p && p.formatted_address) pickupEl.value = p.formatted_address;
-      });
-
-      acDropoff.addListener("place_changed", () => {
-        const d = acDropoff.getPlace();
-        brDropoffPlace = d || null;
-        if (d && d.formatted_address) dropoffEl.value = d.formatted_address;
-      });
-
-      // If user edits manually, clear stored place objects (still allows typing)
-      pickupEl.addEventListener("input", () => { brPickupPlace = null; });
-      dropoffEl.addEventListener("input", () => { brDropoffPlace = null; });
-
-      if (location.protocol === "file:"){
-        // Autocomplete won't work reliably under file://
-        // Keep UI functional; just warn once.
-        console.warn("Google Places Autocomplete won't work under file://. Use http(s) local server or hosted site.");
-      }
-    } catch (e) {
-      console.warn("Google Places failed to initialize on Contact page. Check API key + Places API.", e);
-    }
-  };
-
-  (function loadGoogleMapsForContact(){
-    if(!CONTACT_GOOGLE_MAPS_API_KEY) return;
-
-    // Prevent double-loading
-    if (window.__contactMapsLoaded) return;
-    window.__contactMapsLoaded = true;
-
-    const s = document.createElement("script");
-    s.src =
-      "https://maps.googleapis.com/maps/api/js?key=" +
-      encodeURIComponent(CONTACT_GOOGLE_MAPS_API_KEY) +
-      "&libraries=places&callback=initContactPlaces";
-    s.async = true;
-    s.defer = true;
-    document.head.appendChild(s);
-  })();
-
-
-// Book a Ride (Contact page)
+  // Book a Ride (Contact page)
   (function(){
-    const stripeCheckoutUrl = "https://buy.stripe.com/REPLACE_WITH_YOUR_STRIPE_CHECKOUT_LINK";
+    // IMPORTANT:
+    // - Pricing is calculated client-side (distance-based).
+    // - Payment should be done via a backend that creates a Stripe Checkout Session with a dynamic amount.
+    // - The backend should also send the post-payment email FROM sales@shrinxa.com TO mohr1976@hotmail.com.
+    //   (Client-side JavaScript cannot send email "from" your domain.)
+    const CREATE_CHECKOUT_ENDPOINT = "/api/create-checkout-session"; // you will implement on hosting (Vercel/Node)
+    const CURRENCY = "cad";
 
     const stepEls = Array.from(document.querySelectorAll('.stepper .step'));
     const stepPanels = {
@@ -1102,8 +1020,14 @@
       3: document.getElementById('br-step-3'),
     };
 
-    function val(id){ return (document.getElementById(id)?.value || "").trim(); }
-    function setText(id, text){ const el=document.getElementById(id); if(el) el.textContent=text; }
+    const el = (id)=>document.getElementById(id);
+    const val = (id)=> (el(id)?.value || "").trim();
+    const setText = (id, text)=>{ const n=el(id); if(n) n.textContent = text; };
+
+    let lastDistanceKey = "";
+    let brDistanceKm = null;
+    let brDistanceText = "";
+    let brPriceTotal = null;
 
     function currentDateTime(){
       const d = val('br_date');
@@ -1113,13 +1037,71 @@
       return d || t;
     }
 
+    function transferLabel(){
+      const t = val('br_transfer') || "one_way";
+      return t === "round_trip" ? "Round Trip" : "One Way";
+    }
+
+    function vehicleLabel(){
+      const v = val('br_vehicle');
+      if(v === "suv") return "SUV (1–8 passengers)";
+      if(v === "sedan") return "Sedan (1–3 passengers)";
+      return "—";
+    }
+
+    function waitHours(){
+      const w = parseInt(val('br_wait') || "0", 10);
+      return Number.isFinite(w) ? w : 0;
+    }
+
+    function passengersCount(){
+      const p = parseInt(val('br_passengers') || "", 10);
+      return Number.isFinite(p) ? p : null;
+    }
+
+    function enforcePassengerRules(){
+      const p = passengersCount();
+
+      const vehicleSelect = el("br_vehicle");
+      if(!vehicleSelect) return;
+
+      // Enable both by default
+      const sedanOpt = Array.from(vehicleSelect.options).find(o => o.value === "sedan");
+      const suvOpt = Array.from(vehicleSelect.options).find(o => o.value === "suv");
+
+      if(sedanOpt) sedanOpt.disabled = false;
+      if(suvOpt) suvOpt.disabled = false;
+
+      if(p && p > 3){
+        // 4–8 passengers => SUV only
+        if(sedanOpt) sedanOpt.disabled = true;
+        if(val("br_vehicle") === "sedan") vehicleSelect.value = "suv";
+      }
+      if(p && p > 8){
+        el("br_passengers").value = "8";
+      }
+    }
+
+    function enforceWaitingRules(){
+      const t = val("br_transfer") || "one_way";
+      const waitSel = el("br_wait");
+      if(!waitSel) return;
+
+      if(t !== "round_trip"){
+        waitSel.value = "0";
+        waitSel.disabled = true;
+      } else {
+        waitSel.disabled = false;
+      }
+    }
+
     function refreshSummary(){
       setText('br_sum_pickup', val('br_pickup') || "—");
       setText('br_sum_dropoff', val('br_dropoff') || "—");
       setText('br_sum_dt', currentDateTime());
-      setText('br_sum_transfer', val('br_transfer') || "One Way");
-      setText('br_sum_wait', val('br_wait') || "No Waiting");
-      setText('br_sum_vehicle', val('br_vehicle') || "—");
+      setText('br_sum_transfer', transferLabel());
+      setText('br_sum_wait', (val('br_transfer') === "round_trip") ? (waitHours() ? `${waitHours()} hour(s)` : "No Waiting") : "—");
+      setText('br_sum_vehicle', vehicleLabel());
       setText('br_sum_passengers', val('br_passengers') || "—");
 
       const name = val('br_name');
@@ -1131,6 +1113,8 @@
       if(email) parts.push(email);
       if(phone) parts.push(phone);
       setText('br_sum_contact', parts.length ? parts.join(" • ") : "—");
+
+      setText('br_sum_distance', brDistanceText || "—");
     }
 
     function setStep(n){
@@ -1139,10 +1123,10 @@
         stepPanels[kk].classList.toggle('hidden', kk !== n);
       });
 
-      stepEls.forEach(el=>{
-        const s = Number(el.getAttribute('data-step'));
-        el.classList.toggle('active', s === n);
-        el.classList.toggle('done', s < n);
+      stepEls.forEach(node=>{
+        const s = Number(node.getAttribute('data-step'));
+        node.classList.toggle('active', s === n);
+        node.classList.toggle('done', s < n);
       });
 
       refreshSummary();
@@ -1169,75 +1153,318 @@
       return true;
     }
 
-    // Bind inputs to summary
-    ['br_date','br_time','br_pickup','br_dropoff','br_transfer','br_wait','br_vehicle','br_passengers','br_name','br_phone','br_email']
-      .forEach(id=>{
-        const el = document.getElementById(id);
-        if(el) el.addEventListener('input', refreshSummary);
-        if(el) el.addEventListener('change', refreshSummary);
+    async function geocodeAddress(address){
+      return await new Promise((resolve, reject)=>{
+        const geo = new google.maps.Geocoder();
+        geo.geocode({ address }, (results, status)=>{
+          if(status === "OK" && results && results[0] && results[0].geometry && results[0].geometry.location){
+            resolve(results[0].geometry.location);
+          }else{
+            reject(new Error("Geocode failed: " + status));
+          }
+        });
+      });
+    }
+
+    async function getOriginDestLatLng(){
+      const pickupStr = val("br_pickup");
+      const dropoffStr = val("br_dropoff");
+
+      let o = null;
+      let d = null;
+
+      if(brPickupPlace && brPickupPlace.geometry && brPickupPlace.geometry.location){
+        o = brPickupPlace.geometry.location;
+      } else {
+        o = await geocodeAddress(pickupStr);
+      }
+
+      if(brDropoffPlace && brDropoffPlace.geometry && brDropoffPlace.geometry.location){
+        d = brDropoffPlace.geometry.location;
+      } else {
+        d = await geocodeAddress(dropoffStr);
+      }
+
+      return { o, d };
+    }
+
+    async function computeDistanceKm(){
+      if(!window.google || !google.maps || !google.maps.DistanceMatrixService){
+        throw new Error("Google Maps not loaded.");
+      }
+
+      const pickupStr = val("br_pickup");
+      const dropoffStr = val("br_dropoff");
+      const key = `${pickupStr}|||${dropoffStr}`;
+
+      if(key === lastDistanceKey && brDistanceKm != null){
+        return brDistanceKm;
+      }
+
+      const { o, d } = await getOriginDestLatLng();
+
+      const service = new google.maps.DistanceMatrixService();
+      const resp = await new Promise((resolve, reject)=>{
+        service.getDistanceMatrix({
+          origins: [o],
+          destinations: [d],
+          travelMode: google.maps.TravelMode.DRIVING,
+          unitSystem: google.maps.UnitSystem.METRIC
+        }, (res, status)=>{
+          if(status !== "OK") return reject(new Error("DistanceMatrix failed: " + status));
+          resolve(res);
+        });
       });
 
+      const element = resp?.rows?.[0]?.elements?.[0];
+      if(!element || element.status !== "OK"){
+        throw new Error("Could not calculate distance between these locations.");
+      }
+
+      const meters = element.distance?.value;
+      const text = element.distance?.text;
+
+      if(!meters || meters <= 0) throw new Error("Invalid distance returned.");
+
+      brDistanceKm = meters / 1000;
+      brDistanceText = text || (brDistanceKm.toFixed(1) + " km");
+      lastDistanceKey = key;
+
+      refreshSummary();
+      return brDistanceKm;
+    }
+
+    function calcOneWayPrice(vehicle, km){
+      // vehicle: "sedan" | "suv"
+      if(!km || km <= 0) return null;
+
+      let total = 0;
+      let breakdown = "";
+
+      if(vehicle === "sedan"){
+        if(km < 25){
+          total = 50;
+          breakdown = `Sedan flat rate (under 25km): $50`;
+        } else if(km <= 100){
+          total = km * 2;
+          breakdown = `Sedan rate (25–100km): $2.00/km × ${km.toFixed(1)}km`;
+        } else {
+          const over = km - 100;
+          total = 100 * 2 + over * 1.75;
+          breakdown = `Sedan: first 100km @ $2.00/km + ${over.toFixed(1)}km @ $1.75/km`;
+        }
+      } else if(vehicle === "suv"){
+        if(km < 30){
+          total = 75;
+          breakdown = `SUV flat rate (under 30km): $75`;
+        } else if(km <= 100){
+          total = km * 2.5;
+          breakdown = `SUV rate (30–100km): $2.50/km × ${km.toFixed(1)}km`;
+        } else {
+          const over = km - 100;
+          total = 100 * 2.5 + over * 2;
+          breakdown = `SUV: first 100km @ $2.50/km + ${over.toFixed(1)}km @ $2.00/km`;
+        }
+      } else {
+        return null;
+      }
+
+      return { total, breakdown };
+    }
+
+    function fmtMoney(n){
+      return "$" + n.toFixed(2);
+    }
+
+    async function updatePricingIfReady(){
+      enforcePassengerRules();
+      enforceWaitingRules();
+
+      const name = val("br_name");
+      const priceEl = el("br_price_display");
+      const subEl = el("br_price_sub");
+      const noteEl = el("br_price_note");
+
+      if(!name){
+        brPriceTotal = null;
+        if(priceEl) priceEl.textContent = "—";
+        if(subEl) subEl.textContent = "Enter your name to calculate";
+        if(noteEl) noteEl.textContent = "Enter your name to calculate price.";
+        return;
+      }
+
+      if(!requiredOk()){
+        brPriceTotal = null;
+        if(subEl) subEl.textContent = "Add pickup & drop-off to calculate";
+        if(noteEl) noteEl.textContent = "Add pickup & drop-off to calculate price.";
+        return;
+      }
+
+      if(!val("br_vehicle")){
+        brPriceTotal = null;
+        if(subEl) subEl.textContent = "Select a vehicle to calculate";
+        if(noteEl) noteEl.textContent = "Select a vehicle to calculate price.";
+        return;
+      }
+
+      // Compute distance (driving)
+      let km = null;
+      try{
+        subEl && (subEl.textContent = "Calculating distance…");
+        km = await computeDistanceKm();
+      }catch(e){
+        brPriceTotal = null;
+        if(priceEl) priceEl.textContent = "—";
+        if(subEl) subEl.textContent = "Distance not available";
+        if(noteEl) noteEl.textContent = "Could not calculate distance. Please choose valid pickup & drop-off from Google suggestions.";
+        return;
+      }
+
+      const vehicle = val("br_vehicle");
+      const oneWay = calcOneWayPrice(vehicle, km);
+      if(!oneWay){
+        brPriceTotal = null;
+        if(priceEl) priceEl.textContent = "—";
+        if(subEl) subEl.textContent = "Pricing not available";
+        if(noteEl) noteEl.textContent = "Pricing could not be calculated.";
+        return;
+      }
+
+      const t = val("br_transfer") || "one_way";
+      let total = oneWay.total;
+      let details = oneWay.breakdown;
+
+      if(t === "round_trip"){
+        total = total * 2;
+        details = `Round Trip = (One Way × 2). ${details}`;
+
+        const w = waitHours();
+        if(w > 0){
+          total += (w * 30);
+          details += ` + Waiting: $30 × ${w} hour(s)`;
+        }
+      }
+
+      brPriceTotal = total;
+
+      if(priceEl) priceEl.textContent = fmtMoney(total) + " CAD";
+      if(subEl) subEl.textContent = (brDistanceText ? `Distance: ${brDistanceText}` : "Distance calculated");
+      if(noteEl) noteEl.textContent = details;
+    }
+
+    async function createCheckoutSession(){
+      // Must have computed price
+      if(brPriceTotal == null){
+        await updatePricingIfReady();
+      }
+      if(brPriceTotal == null){
+        alert("Price is not ready yet. Please enter your name and make sure pickup/drop-off are valid.");
+        return;
+      }
+
+      const payload = {
+        currency: CURRENCY,
+        amount_cents: Math.round(brPriceTotal * 100),
+        booking: {
+          pickup: val('br_pickup') || "",
+          dropoff: val('br_dropoff') || "",
+          pickup_place_id: brPickupPlace?.place_id || "",
+          dropoff_place_id: brDropoffPlace?.place_id || "",
+          distance_km: brDistanceKm,
+          transfer_type: val('br_transfer') || "one_way",
+          waiting_hours: (val('br_transfer') === "round_trip") ? waitHours() : 0,
+          vehicle: val('br_vehicle') || "",
+          passengers: passengersCount() || "",
+          pickup_datetime: currentDateTime(),
+          customer_name: val('br_name') || "",
+          customer_email: val('br_email') || "",
+          customer_phone: val('br_phone') || "",
+          notify_to: "mohr1976@hotmail.com",
+          notify_from: "sales@shrinxa.com"
+        }
+      };
+
+      try{
+        const res = await fetch(CREATE_CHECKOUT_ENDPOINT, {
+          method: "POST",
+          headers: {"Content-Type":"application/json"},
+          body: JSON.stringify(payload)
+        });
+
+        if(!res.ok){
+          throw new Error("Checkout endpoint error: " + res.status);
+        }
+
+        const data = await res.json();
+        if(!data || !data.url){
+          throw new Error("Invalid response from checkout endpoint.");
+        }
+
+        window.location.href = data.url;
+      }catch(err){
+        console.warn(err);
+        alert("Stripe payment is not connected yet.\n\nYou need a backend endpoint at " + CREATE_CHECKOUT_ENDPOINT + " to create a Stripe Checkout Session with a dynamic price.");
+      }
+    }
+
+    // Bind inputs to summary + pricing
+    [
+      'br_date','br_time',
+      'br_pickup','br_dropoff',
+      'br_transfer','br_wait',
+      'br_vehicle','br_passengers',
+      'br_name','br_phone','br_email'
+    ].forEach(id=>{
+      const node = el(id);
+      if(!node) return;
+
+      node.addEventListener('input', ()=>{
+        enforcePassengerRules();
+        enforceWaitingRules();
+        refreshSummary();
+        updatePricingIfReady();
+      });
+      node.addEventListener('change', ()=>{
+        enforcePassengerRules();
+        enforceWaitingRules();
+        refreshSummary();
+        updatePricingIfReady();
+      });
+    });
+
     // Buttons
-    document.getElementById('br_next_1')?.addEventListener('click', ()=>{
+    el('br_next_1')?.addEventListener('click', ()=>{
       if(!requiredOk()) return;
       setStep(2);
     });
-    document.getElementById('br_back_2')?.addEventListener('click', ()=> setStep(1));
-    document.getElementById('br_next_2')?.addEventListener('click', ()=>{
+    el('br_back_2')?.addEventListener('click', ()=> setStep(1));
+    el('br_next_2')?.addEventListener('click', ()=>{
+      enforcePassengerRules();
       if(!vehicleOk()) return;
       setStep(3);
+      updatePricingIfReady();
     });
-    document.getElementById('br_back_3')?.addEventListener('click', ()=> setStep(2));
+    el('br_back_3')?.addEventListener('click', ()=> setStep(2));
 
-    document.getElementById('br_pay')?.addEventListener('click', ()=>{
+    el('br_pay')?.addEventListener('click', async ()=>{
       if(!requiredOk()) return;
       if(!vehicleOk()) return;
 
-      refreshSummary();
+      // must have name to calculate
+      if(!val("br_name")){
+        alert("Please enter Customer Name to calculate the price.");
+        return;
+      }
 
-      // Build internal email body (temporary)
-      const bodyLines = [
-        "NEW RIDE BOOKING (PAY NOW)",
-        "",
-        `Pickup: ${val('br_pickup') || "-"}`,
-        `Drop-off: ${val('br_dropoff') || "-"}`,
-        `Pickup Place ID: ${brPickupPlace?.place_id || "-"}`,
-        `Drop-off Place ID: ${brDropoffPlace?.place_id || "-"}`,
-        `Date/Time: ${currentDateTime()}`,
-        `Transfer Type: ${val('br_transfer') || "-"}`,
-        `Extra Waiting: ${val('br_wait') || "-"}`,
-        `Vehicle: ${val('br_vehicle') || "-"}`,
-        `Passengers: ${val('br_passengers') || "-"}`,
-        "",
-        `Customer Name: ${val('br_name') || "-"}`,
-        `Customer Email: ${val('br_email') || "-"}`,
-        `Customer Phone: ${val('br_phone') || "-"}`,
-        "",
-        "Next step: Customer is being sent to Stripe Checkout to pay now."
-      ];
-
-      const subject = encodeURIComponent("New Ride Booking (Pay Now)");
-      const body = encodeURIComponent(bodyLines.join("\n"));
-      const mailto = `mailto:mor1976@hotmail.com?subject=${subject}&body=${body}`;
-
-      // Open email draft (works without server). Then open Stripe checkout.
-      window.location.href = mailto;
-
-      // Open Stripe checkout in a new tab/window
-      setTimeout(()=>{
-        if(stripeCheckoutUrl.includes("REPLACE_WITH_YOUR_STRIPE_CHECKOUT_LINK")){
-          alert("Stripe Checkout link is not set yet. Replace the stripeCheckoutUrl in contact.html with your real Stripe Checkout link.");
-          return;
-        }
-        window.open(stripeCheckoutUrl, "_blank", "noopener,noreferrer");
-      }, 600);
+      await updatePricingIfReady();
+      await createCheckoutSession();
     });
 
-    // Initialize
+    // Initialize rules
+    enforceWaitingRules();
     refreshSummary();
     setStep(1);
-  })();
-</script>
+  })();</script>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
